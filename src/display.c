@@ -7,6 +7,8 @@
 #include "monitor.h"
 #include "utils.h"
 
+#define INITIAL_SIZE 100
+
 void *display_print(void *arg) {
     SharedMemo *shm = (SharedMemo *)arg;
     struct timespec tp_start, tp_stop;
@@ -14,7 +16,7 @@ void *display_print(void *arg) {
     double t = 0.0;
 
     clock_gettime(CLOCK_MONOTONIC, &tp_start);
-    while(t < 20.0) {
+    while(t < 20.0 ) {
         clock_gettime(CLOCK_MONOTONIC, &tp_stop);
         t = timespec_diff(&tp_start, &tp_stop);
         v = getV(shm);
@@ -24,6 +26,7 @@ void *display_print(void *arg) {
         y3 = getY3(shm);
 
         printf("%f,%f,%f,%f,%f,%f\n", t, v, w, y1, y2, y3);
+        fflush(stdout);
     }
     return NULL;
 }
